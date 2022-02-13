@@ -2,6 +2,7 @@ import React from "react";
 import FilterPanel from "../components/FilterPanel";
 import Header from "../components/Header";
 import Products from "../components/Products";
+import ProductPage from "./ProductPage";
 
 function Index() {
   console.log("render");

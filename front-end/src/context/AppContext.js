@@ -9,6 +9,11 @@ const appContext = React.createContext();
 export default function AppProvider(props) {
   const { loading, data, error } = CustumHttpGet('http://localhost:8080/');
 
+  useEffect(() => {
+  
+  }, [loading])
+  
+
   return (
     <appContext.Provider
       value={{
