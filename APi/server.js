@@ -6,10 +6,10 @@ const dateJson = require("./data.json");
 
 app.use(cors());
 
-app.get("/", (req, res) => {
+app.get("/products", (req, res) => {
   res.status(200).json(dateJson);
 });
-app.get("/:id", (req, res) => {
+app.get("/products:id", (req, res) => {
   const item = dateJson.filter((item) => item.id == req.params.id);
   res.status(200).json(item);
 });

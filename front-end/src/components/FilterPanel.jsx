@@ -1,12 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/Filter-menu.css";
-function FilterPanel() {
-  const filterMenu = ["All", "Furniture", "Kitchen", "Lighting", "TableWare"];
+import { useGlobalContext } from "../context/AppContext";
+
+function FilterPanel({categories, setCategories, setCurrentCategory}) {
+  const { products } = useGlobalContext();
+  const { loading, data, error } = products;
+
+  useEffect(() => {
+    setCategories( data.reduce(
+      function (values, item) {
+        if (!values.includes(item.category)) {
+          values.push(item.category);
+        }
+        return values;
+      },
+      ["All"]
+    ))
+  }, []);
+
+
+
   return (
     <div className="menu-panel">
       <div className="menu-items">
-        {filterMenu.map((item, index) => {
-          return <li key={index} className="menu-item">{item}</li>;
+        {categories.map((item, index) => {
+          return (
+            <li key={index} className="menu-item" onClick={(e)=>setCurrentCategory(e.target.innerText)}>
+              {item}
+            </li>
+          );
         })}
       </div>
     </div>

@@ -1,30 +1,45 @@
 /** @format */
 
-import React, { useState } from 'react';
-import '../styles/Pagination.css';
+import React, { useState } from "react";
+import "../styles/Pagination.css";
 
 function ProductPagination({
   paginationDataProp,
-  pageIndex,
+  pageIndexProp,
   setPaginationIndex,
 }) {
   return (
-    <div className='product-pagination'>
-      {pageIndex >= 1 && <div className='page-index' onClick={() => setPaginationIndex(1)}>>←</div>}
+    <div className="product-pagination">
+      {pageIndexProp >= 1 && (
+        <div
+          className="page-index"
+          onClick={() => setPaginationIndex((prev) => prev - 1)}
+        >
+          ←
+        </div>
+      )}
       {paginationDataProp?.map((pageIndex, index) => {
         return (
           <div
             className={
-              pageIndex + 1 == 1 ? 'page-index page-active' : 'page-index'
+              pageIndexProp + 1 == index + 1
+                ? "page-index page-active"
+                : "page-index"
             }
             key={index}
-            onClick={() => setPaginationIndex(index)}>
+            onClick={() => setPaginationIndex(index)}
+          >
             {index + 1}
           </div>
         );
       })}
-      {pageIndex == paginationDataProp.length - 1 ? null : (
-        <div className='page-index' onClick={() => setPaginationIndex()}>→</div>
+      {pageIndexProp == paginationDataProp.length - 1 ? null : (
+        <div
+          className="page-index"
+          onClick={() => setPaginationIndex((prev) => prev + 1)}
+        >
+          →
+        </div>
       )}
     </div>
   );

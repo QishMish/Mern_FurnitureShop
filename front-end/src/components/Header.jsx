@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "../styles/Header.css";
 import HeaderCart from "./HeaderCart";
 import Navbar from "./Navbar";
@@ -8,9 +9,9 @@ function Header() {
     <div className="container">
       <div className="header">
         <Navbar />
-        <div className="header__logo">
+        <Link to="shop" className="header__logo">
           <h1>OCIN LITE</h1>
-        </div>
+        </Link>
         <HeaderCart />
       </div>
     </div>
