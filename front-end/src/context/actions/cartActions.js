@@ -4,6 +4,8 @@ import {
   INCREASE,
   DECREASE,
   CLEAR_CART,
+  CALCULATE_TOTALS,
+  CALCULATE_ITEM_SUBTOTALS
 } from "../constants/cartConstants";
 
 export const addItem = (props) => {
@@ -35,3 +37,15 @@ export const clearCart = () => {
     type: CLEAR_CART,
   };
 };
+export const calculateTotal = () => {
+  return {
+    type: CALCULATE_TOTALS,
+  };
+};
+
+export const calculateSubtotals =()=>{
+  return {
+    type: CALCULATE_ITEM_SUBTOTALS
+  };
+}
+

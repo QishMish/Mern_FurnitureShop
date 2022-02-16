@@ -5,7 +5,6 @@ import AppRouter from "./routes/AppRouter";
 import AppProvider from "./context/AppContext";
 
 function App() {
-  console.log("render");
   return (
     <>
       <BrowserRouter>

@@ -12,7 +12,12 @@ export default function CustumHttpGet(url) {
       if (response.statusText !== "OK") {
         throw new Error("Not 200");
       }
-      setData(response.data.products);
+      if(response.data.products){
+        setData(response.data.products);
+      }
+      else{
+        setData(response.data)
+      }
       setLoading(false);
     } catch (error) {
       setError(error);
@@ -20,7 +25,7 @@ export default function CustumHttpGet(url) {
   };
   useEffect(() => {
     FetchData();
-  }, []);
+  }, [url]);
 
   return { loading, data, error };
 }

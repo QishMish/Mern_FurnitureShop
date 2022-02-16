@@ -14,16 +14,60 @@
 .nav-items {
   display: flex;
   justify-content: space-around;
-  min-width: 130px;
+  min-width: 150px;
   width: 50%;
 }
-
+.menu {
+  font-size: 30px;
+  position: absolute;
+  top: 30px;
+  left: -10px;
+  transform: translateY(-50%);
+  opacity: 0;
+  color: rgb(56, 56, 56);
+  cursor: pointer;
+}
+@media only screen and (max-width: 680px) {
+ 
+  .navbar {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+  }
+  .nav-items {
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    background-color: #fff;
+    opacity: 0;
+  }
+  .nav-item {
+    padding: 20px 0;
+    cursor: pointer;
+  }
+  .header__logo {
+    justify-content: start;
+  }
+  .menu {
+    opacity: 1;
+  }
+  .header__logo h1{
+    font-size: 1rem;
+  }
+}
+.nav-items-show {
+  opacity: 1;
+}
 .nav-item {
   list-style: none;
   text-decoration: none;
   color: rgb(134, 134, 134);
   text-transform: uppercase;
   font-size: 0.8rem;
+  margin-right: 10px;
 }
 .header__logo {
   color: rgb(56, 56, 56);
@@ -45,14 +89,19 @@
   align-items: center;
   color: rgb(134, 134, 134);
   cursor: pointer;
-
 }
 .header-cart-price {
   margin-right: 15px;
+  display: flex;
+  align-items: center;
+}
+.header-cart-price span{
+  font-size: 20px;
+  margin-left: 10px;
 }
 .header-cart-icon {
 }
-.header-cart:hover .cart-wrapper{
+.header-cart:hover .cart-wrapper {
   background-color: rgb(238, 234, 234);
 }
 .header-cart:hover .cart-container-open {
@@ -81,7 +130,7 @@
   z-index: 10;
   box-shadow: rgba(227, 233, 238, 0.2) 0px 10px 15px;
 }
-.header-cart-grid{
+.header-cart-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   grid-gap: 10px;
@@ -90,7 +139,7 @@
   height: 100%;
   background-color: aquamarine;
 }
-.header-cart-item{
+.header-cart-item {
   background-color: aqua;
   width: 100%;
   height: 60px;
@@ -99,10 +148,10 @@
   align-items: center;
   justify-content: center;
 }
-.top{
+.top {
   display: flex;
 }
-.top img{
+.top img {
   width: 90px;
   height: 100%;
 }

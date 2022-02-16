@@ -1,14 +1,20 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useGlobalContext } from "../context/AppContext";
 
 function HeaderCart() {
   const open = true;
+  const { cartState } = useGlobalContext();
   return (
     <>
       <div className="header-cart">
-        <Link to="shop/cart" className="cart-wrapper">
+        <Link to="/shop/cart" className="cart-wrapper">
           <div className="header-cart-price">
-            $1,921.00<span> (1)</span>
+            $
+            {cartState.total > 100
+              ? cartState.total.toFixed(2)
+              : cartState.total}
+            <span> {cartState.amount}</span>
           </div>
           <div className="header-cart-icon">
             <img

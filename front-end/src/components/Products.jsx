@@ -17,17 +17,13 @@ function Products() {
 
   const paginationData = paginateHandler(data);
 
-
   const filteredCategory = categories.filter(category =>
     category.toLowerCase() == currentCategory.toLowerCase()
   );
 
-
   if (loading) {
     return <Loading />;
   }
-  console.log(currentCategory)
-
   return (
     <div className="products">
       <FilterPanel categories={categories} setCategories = {setCategories} setCurrentCategory = {setCurrentCategory}/>
