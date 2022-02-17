@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { useGlobalContext } from "../context/AppContext";
 
 function HeaderCart() {
-  const open = true;
   const { cartState } = useGlobalContext();
   return (
     <>

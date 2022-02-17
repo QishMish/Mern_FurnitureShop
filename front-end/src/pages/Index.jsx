@@ -6,8 +6,6 @@ import CartPage from "./CartPage";
 import ProductPage from "./ProductPage";
 
 function Index() {
-  console.log("render");
-
   return (
     <div className="index-page  bg-gray">
       <div className="container">

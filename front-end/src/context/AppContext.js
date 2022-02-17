@@ -10,7 +10,6 @@ const CART_INITIAL_STATE = {
   total: 0,
   amount: 0,
 };
-
 export default function AppProvider(props) {
   const { loading, data, error } = CustumHttpGet(
     "http://localhost:8080/products"

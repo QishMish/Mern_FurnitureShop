@@ -19,7 +19,7 @@ function Navbar() {
     },
     {
       heading: "products",
-      url: "/",
+      url: "/shop",
       id: "#products",
     },
   ];

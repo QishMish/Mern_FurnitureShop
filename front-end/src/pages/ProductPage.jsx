@@ -27,6 +27,9 @@ export default function ProductPage() {
   } = CustumHttpGet(`http://localhost:8080/related_products/` + productId);
 
   const addItemHandler = () => {
+    if(parseInt(amount) < 1){
+      return
+    }
     const cartItem = {
       ...data[0],
       amount: parseInt(amount),

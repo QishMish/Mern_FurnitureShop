@@ -1,11 +1,22 @@
-/** @format */
-
-export const paginateHandler = data => {
+export const paginateHandler = (data, category) => {
   const itemsPerPage = 14;
-  const pageQuantity = Math.ceil(data.length / itemsPerPage);
-  const productsArr = Array.from({ length: pageQuantity }, (_, index) => {
-    const start = index * itemsPerPage;
-    return data.slice(start, start + itemsPerPage);
-  });
-  return productsArr;
+  if (category.toLowerCase() === "all") {
+    const pageQuantity = Math.ceil(data.length / itemsPerPage);
+    const productsArr = Array.from({ length: pageQuantity }, (_, index) => {
+      const start = index * itemsPerPage;
+      return data.slice(start, start + itemsPerPage);
+    });
+    return productsArr;
+  } else {
+    const filteredByCategory = data.filter((product) => {
+      return product.category.toLowerCase() === category;
+    });
+    console.log(filteredByCategory.length);
+    const pageQuantity = Math.ceil(filteredByCategory.length / itemsPerPage);
+    const productsArr = Array.from({ length: pageQuantity }, (_, index) => {
+      const start = index * itemsPerPage;
+      return filteredByCategory.slice(start, start + itemsPerPage);
+    });
+    return productsArr;
+  }
 };

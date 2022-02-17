@@ -1,7 +1,12 @@
 import "../styles/Cart-page.css";
 import * as React from "react";
+import { useState } from "react";
 import { useGlobalContext } from "../context/AppContext";
-import { increase, removeItem } from "../context/actions/cartActions";
+import {
+  increase,
+  removeItem,
+  updateCart,
+} from "../context/actions/cartActions";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -49,10 +54,16 @@ const rows = [
 export default function CartPage() {
   const { cartState, dispatch } = useGlobalContext();
   const { cartItems, total, amount } = cartState;
-  const { cartAmount, setCartAmount } = React.useState(1);
+  const [cartAmount, setCartAmount] = useState(1);
 
   const removeItemHandler = (id) => {
     dispatch(removeItem(id));
+  };
+  const cartUpdateHandler = (id) => {
+    if(cartAmount < 1){
+      return
+    }
+    dispatch(updateCart({ id: id, data: parseInt(cartAmount) }));
   };
 
   return (
@@ -93,14 +104,19 @@ export default function CartPage() {
                           type="number"
                           value={cartAmount}
                           min={1}
-                          onChange={(e)=> setCartAmount(e.target.value)}
+                          onChange={(e) => setCartAmount(e.target.value)}
                           InputLabelProps={{
                             shrink: true,
                           }}
+                          InputProps={{ inputProps: { min: 1 } }}
                         />
                       </StyledTableCell>
                       <StyledTableCell>
-                        <MdOutlineDoneOutline className="cart-save" onClick={() => dispatch(increase(item.id))}/>
+                        <MdOutlineDoneOutline
+                          className="cart-save"
+                          // onClick={() => dispatch(increase(cartAmount))}
+                          onClick={() => cartUpdateHandler(item.id)}
+                        />
                       </StyledTableCell>
                       <StyledTableCell align="right">
                         {item.subTotal}
@@ -120,11 +136,15 @@ export default function CartPage() {
               <h1>Cart Totals</h1>
               <div className="subtotal">
                 <div className="p">Subtotal</div>
-                <div className="span">$798.31.91</div>
+                <div className="span">
+                  ${total > 100 ? total.toFixed(2) : total}
+                </div>
               </div>
               <div className="total">
                 <div className="p">Total</div>
-                <div className="span">$798.31.91</div>
+                <div className="span">
+                  ${total > 100 ? total.toFixed(2) : total}
+                </div>
               </div>
               <a className="checkout">Proceed To Checkout</a>
             </div>

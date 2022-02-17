@@ -3,9 +3,10 @@ import {
   REMOVE_ITEM,
   INCREASE,
   DECREASE,
+  UPDATE_CART,
   CLEAR_CART,
   CALCULATE_TOTALS,
-  CALCULATE_ITEM_SUBTOTALS
+  CALCULATE_ITEM_SUBTOTALS,
 } from "../constants/cartConstants";
 
 export const addItem = (props) => {
@@ -32,6 +33,12 @@ export const decrease = (props) => {
     payload: props,
   };
 };
+export const updateCart = (props) => {
+  return {
+    type: UPDATE_CART,
+    payload: props,
+  };
+};
 export const clearCart = () => {
   return {
     type: CLEAR_CART,
@@ -42,10 +49,8 @@ export const calculateTotal = () => {
     type: CALCULATE_TOTALS,
   };
 };
-
-export const calculateSubtotals =()=>{
+export const calculateSubtotals = () => {
   return {
-    type: CALCULATE_ITEM_SUBTOTALS
+    type: CALCULATE_ITEM_SUBTOTALS,
   };
-}
-
+};

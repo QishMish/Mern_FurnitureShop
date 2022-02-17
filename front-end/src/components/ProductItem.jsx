@@ -21,7 +21,7 @@ function ProductItem({ product }) {
 
   function setSpans() {
     height = imageRef.current.clientHeight;
-    const addition = height === 476.84 ? 10 : 7;
+    const addition = height === 476.84 ? 10 : 8;
     const spans = Math.ceil(height / 10) + addition;
     setSpan(spans);
   }

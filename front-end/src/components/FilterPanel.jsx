@@ -19,7 +19,6 @@ function FilterPanel({categories, setCategories, setCurrentCategory}) {
   }, []);
 
 
-
   return (
     <div className="menu-panel">
       <div className="menu-items">

@@ -3,6 +3,7 @@ import "./styles/Index.css";
 import { BrowserRouter } from "react-router-dom";
 import AppRouter from "./routes/AppRouter";
 import AppProvider from "./context/AppContext";
+import AdminRoute from "./routes/AdminRoute";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <BrowserRouter>
         <AppProvider>
           <AppRouter />
+          {/* <AdminRoute /> */}
         </AppProvider>
       </BrowserRouter>
     </>

@@ -6,6 +6,7 @@ import {
   CLEAR_CART,
   CALCULATE_TOTALS,
   CALCULATE_ITEM_SUBTOTALS,
+  UPDATE_CART,
 } from "../constants/cartConstants";
 
 export const cartReducer = (state = {}, action) => {
@@ -34,9 +35,7 @@ export const cartReducer = (state = {}, action) => {
         ...state,
         cartItems: addedItemCart,
       };
-
     case REMOVE_ITEM:
-      console.log(action);
       let newCart = state.cartItems.filter(
         (item) => item.id !== action.payload
       );
@@ -46,10 +45,10 @@ export const cartReducer = (state = {}, action) => {
       };
     case INCREASE:
       let increasedAmount = state.cartItems.filter((item) => {
-        if (item.id == action.payload) {
+        if (item.id == action.payload.id) {
           return {
             ...item,
-            amount: (item.amount += 1),
+            amount: (item.amount += action.payload),
           };
         }
         return item;
@@ -61,10 +60,10 @@ export const cartReducer = (state = {}, action) => {
     case DECREASE:
       let decreaseAmount = state.cartItems
         .filter((item) => {
-          if (item.id == action.payload) {
+          if (item.id == action.payload.id) {
             return {
               ...item,
-              amount: (item.amount -= 1),
+              amount: (item.amount -= action.payload),
             };
           }
           return item;
@@ -73,6 +72,20 @@ export const cartReducer = (state = {}, action) => {
       return {
         ...state,
         cartItems: decreaseAmount,
+      };
+    case UPDATE_CART:
+      let updatedCart = state.cartItems.map((item) => {
+        if (item.id == action.payload.id) {
+          return {
+            ...item,
+            amount: action.payload.data,
+          };
+        }
+        return item;
+      });
+      return {
+        ...state,
+        cartItems: updatedCart,
       };
     case CLEAR_CART:
       return {
@@ -105,7 +118,8 @@ export const cartReducer = (state = {}, action) => {
         cartItems: calculatedSubtotal,
       };
     default:
-      break;
+      return {
+        state,
+      };
   }
-  return state;
 };
