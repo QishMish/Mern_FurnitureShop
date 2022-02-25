@@ -12,5 +12,8 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(285px, 1fr));
   grid-gap: 0 10px;
-  grid-auto-rows: 10px;
+  /* grid-auto-rows: 10px; */
 }
+
+/* ენვირომენტ ვარიაბლეს,რესტ აპი
+მვც პატერნი,*/

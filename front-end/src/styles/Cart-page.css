@@ -5,6 +5,8 @@
   box-shadow: rgba(227, 233, 238, 0.2) 0px 10px 15px;
   display: flex;
   flex-direction: column;
+  height:calc(100vh - 130px);
+  padding: 50px auto;
 }
 .cart-page h1 {
   margin: 30px 0 30px 0;
@@ -62,4 +64,7 @@
   float: right;
   margin-right: 10px;
   cursor: pointer;
+}
+.clear-cart{
+  margin: 30px 0 !important;
 }

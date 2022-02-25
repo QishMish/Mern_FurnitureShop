@@ -15,10 +15,13 @@ export default function ProductPage() {
   const { dispatch } = useGlobalContext();
   const [amount, setAmount] = useState(1);
 
+  console.log(`http://localhost:8080/api/v1/product/` + productId);
+
   const { loading, data, error } = CustumHttpGet(
-    `http://localhost:8080/products/` + productId
+    `http://localhost:8080/api/v1/product/` + productId
   );
-  const [product] = data;
+  // const [product] = data;
+  console.log(data);
 
   const {
     loading: relatedLoading,
@@ -27,15 +30,20 @@ export default function ProductPage() {
   } = CustumHttpGet(`http://localhost:8080/related_products/` + productId);
 
   const addItemHandler = () => {
-    if(parseInt(amount) < 1){
-      return
+    if (parseInt(amount) < 1) {
+      return;
     }
+    const { _id, title, price, images, subtotal } = data;
+    let image = images[0];
     const cartItem = {
-      ...data[0],
+      id:_id,
+      title,
+      price,
+      image,
+      subtotal,
       amount: parseInt(amount),
     };
-    dispatch(addItem(cartItem))
-    
+    dispatch(addItem(cartItem));
   };
 
   if (loading) {
@@ -47,13 +55,13 @@ export default function ProductPage() {
       <div className="single-product-page container">
         <div className="single-product-info">
           <div className="product-left">
-            <SingleProductCatalog images={product.images} />
+            <SingleProductCatalog images={data.images} />
           </div>
           <div className="product-right">
             <p className="header">Home / Furniture / Aform Barstool</p>
             <div className="info">
-              <p>{product.title}</p>
-              <span>{product.price}</span>
+              <p>{data.title}</p>
+              <span>{data.price}</span>
             </div>
             <div className="product-info-footer">
               <div className="add-to-cart">
@@ -82,7 +90,7 @@ export default function ProductPage() {
         <div className="single-product-description">
           <div className="desc-title">Description </div>
           <h2>Description </h2>
-          <p>{product.description}</p>
+          <p>{data.description}</p>
         </div>
         <h2>Related Products</h2>
         <div className="single-product-realated">

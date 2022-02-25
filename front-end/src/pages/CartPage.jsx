@@ -3,9 +3,9 @@ import * as React from "react";
 import { useState } from "react";
 import { useGlobalContext } from "../context/AppContext";
 import {
-  increase,
   removeItem,
   updateCart,
+  clearCart,
 } from "../context/actions/cartActions";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -18,6 +18,8 @@ import Paper from "@mui/material/Paper";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import TextField from "@mui/material/TextField";
 import { MdOutlineDoneOutline } from "react-icons/md";
+import Button from '@mui/material/Button';
+
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -56,16 +58,20 @@ export default function CartPage() {
   const { cartItems, total, amount } = cartState;
   const [cartAmount, setCartAmount] = useState(1);
 
+  console.log(cartItems);
+
   const removeItemHandler = (id) => {
     dispatch(removeItem(id));
   };
   const cartUpdateHandler = (id) => {
-    if(cartAmount < 1){
-      return
+    if (cartAmount < 1) {
+      return;
     }
     dispatch(updateCart({ id: id, data: parseInt(cartAmount) }));
   };
-
+  const clearCartHandler = () => {
+    dispatch(clearCart());
+  };
   return (
     <div className="bg-gray">
       <div className="cart-page container">
@@ -80,6 +86,7 @@ export default function CartPage() {
                   <TableRow>
                     <StyledTableCell>Product</StyledTableCell>
                     <StyledTableCell align="right">Price</StyledTableCell>
+                    <StyledTableCell align="right">Amount</StyledTableCell>
                     <StyledTableCell align="right">Quantity</StyledTableCell>
                     <StyledTableCell align="right">Confirm</StyledTableCell>
                     <StyledTableCell align="right">Subtotal</StyledTableCell>
@@ -99,10 +106,13 @@ export default function CartPage() {
                         {item.price}
                       </StyledTableCell>
                       <StyledTableCell align="right">
+                        {item.amount}
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
                         <TextField
                           id="outlined-number"
                           type="number"
-                          value={cartAmount}
+                          defaultValue={1}
                           min={1}
                           onChange={(e) => setCartAmount(e.target.value)}
                           InputLabelProps={{
@@ -119,7 +129,7 @@ export default function CartPage() {
                         />
                       </StyledTableCell>
                       <StyledTableCell align="right">
-                        {item.subTotal}
+                        ${item.subTotal}
                       </StyledTableCell>
                       <StyledTableCell className="item-center">
                         <AiOutlineCloseCircle
@@ -133,6 +143,9 @@ export default function CartPage() {
               </Table>
             </TableContainer>
             <div className="cart-calculation">
+            <Button variant="outlined" color="error" className="clear-cart" onClick={clearCartHandler}>
+              Clear Cart
+            </Button>
               <h1>Cart Totals</h1>
               <div className="subtotal">
                 <div className="p">Subtotal</div>

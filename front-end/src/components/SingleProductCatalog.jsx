@@ -1,6 +1,4 @@
-/** @format */
-
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "../styles/Product-catalog.css";
 import "swiper/css";

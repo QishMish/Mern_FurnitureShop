@@ -2,35 +2,34 @@ import React, { useState, useRef, useEffect } from "react";
 import { addItem } from "../context/actions/cartActions";
 import { Link } from "react-router-dom";
 import "../styles/Product-item.css";
-import Products from "./Products";
 import { BsCartPlus } from "react-icons/bs";
 import { useGlobalContext } from "../context/AppContext";
 import { MdDoneOutline } from "react-icons/md";
+import { motion } from "framer-motion";
 
 function ProductItem({ product }) {
-  const { id, title, price, images, description, related_products, reviews } =
-    product;
+  const { _id, title, price, images } = product;
   const { dispatch, cartState } = useGlobalContext();
-
-  const [span, setSpan] = useState(0);
+  // const [span, setSpan] = useState(0);
   const imageRef = useRef();
-  let height;
-  useEffect(() => {
-    imageRef.current.addEventListener("load", setSpans);
-  }, []);
 
-  function setSpans() {
-    height = imageRef.current.clientHeight;
-    const addition = height === 476.84 ? 10 : 8;
-    const spans = Math.ceil(height / 10) + addition;
-    setSpan(spans);
-  }
-  const exist = cartState.cartItems.find((item) => item.id === id);
+  // let height;
+  // useEffect(() => {
+  //   imageRef.current.addEventListener("load", setSpans);
+  // },[]);
+
+  // function setSpans() {
+  //   height = imageRef.current.clientHeight;
+  //   const addition = height === 476.84 ? 10 : 8;
+  //   const spans = Math.ceil(height / 10) + addition;
+  //   setSpan(spans);
+  // }
+  const exist = cartState.cartItems.find((item) => item.id === _id);
 
   const addItemHandler = () => {
     dispatch(
       addItem({
-        id: id,
+        id: _id,
         title: title,
         price: price,
         image: images[0],
@@ -39,11 +38,11 @@ function ProductItem({ product }) {
       })
     );
   };
-
+  // style={{ gridRowEnd: `span ${span}` }}
   return (
-    <div className="product-item" style={{ gridRowEnd: `span ${span}` }}>
+    <motion.div layout className="product-item">
       <div className="image-container">
-        <Link to={id}>
+        <Link to={_id}>
           <img
             className="main-image"
             ref={imageRef}
@@ -76,7 +75,7 @@ function ProductItem({ product }) {
         <p>{title}</p>
         <span>{price}</span>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

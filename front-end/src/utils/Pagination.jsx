@@ -11,7 +11,6 @@ export const paginateHandler = (data, category) => {
     const filteredByCategory = data.filter((product) => {
       return product.category.toLowerCase() === category;
     });
-    console.log(filteredByCategory.length);
     const pageQuantity = Math.ceil(filteredByCategory.length / itemsPerPage);
     const productsArr = Array.from({ length: pageQuantity }, (_, index) => {
       const start = index * itemsPerPage;

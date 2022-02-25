@@ -6,6 +6,7 @@ import { useGlobalContext } from "../context/AppContext";
 import ProductPagination from "./ProductPagination";
 import { paginateHandler } from "../utils/Pagination";
 import Loading from "./Loading";
+import { motion } from "framer-motion";
 
 function Products() {
   const { products } = useGlobalContext();
@@ -14,17 +15,17 @@ function Products() {
   const [categories, setCategories] = useState([]);
   const [currentCategory, setCurrentCategory] = useState("all");
   const [paginationData, setPaginationData] = useState([]);
-
-  console.log("render");
+  const [filteringData, setFilteringData] = useState([]);
 
   useEffect(() => {
     const pagDate = paginateHandler(data, currentCategory);
     setPaginationData(pagDate);
+    setFilteringData(pagDate);
   }, [data, currentCategory]);
 
   useEffect(() => {}, [data, currentCategory]);
 
-  const renderProducts = paginationData[pageIndex]?.map((product, index) => {
+  const renderProducts = filteringData[pageIndex]?.map((product, index) => {
     return <ProductItem key={index} product={product} />;
   });
   if (loading) {
@@ -38,10 +39,17 @@ function Products() {
         setCurrentCategory={setCurrentCategory}
       />
       <div className="products-info">
-        {/* Showing {pageIndex + 1} – {paginationData[pageIndex].length} of 
-        {data.length} results */}
+        Showing {pageIndex + 1} – {paginationData[pageIndex]?.length} of
+        {data.length} results
       </div>
-      <div className="product-grid">{renderProducts}</div>
+      <motion.div
+        layout
+        animate={{ opacity: 1 }}
+        initial={{ opacity: 0 }}
+        className="product-grid"
+      >
+        {renderProducts}
+      </motion.div>
       <ProductPagination
         paginationDataProp={paginationData}
         pageIndexProp={pageIndex}

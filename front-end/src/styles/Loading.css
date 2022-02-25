@@ -1,6 +1,8 @@
 .loading{
-    height: calc(100vh - 140px);
+    /* height: calc(100vh - 140px); */
+    height: auto;
     width: 100%;
+    margin: auto;
     display: flex;
     align-items: center;
     justify-content: center ;

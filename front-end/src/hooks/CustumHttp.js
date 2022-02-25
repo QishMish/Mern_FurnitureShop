@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function CustumHttpGet(url) {
@@ -12,13 +12,15 @@ export default function CustumHttpGet(url) {
       if (response.statusText !== "OK") {
         throw new Error("Not 200");
       }
-      if(response.data.products){
-        setData(response.data.products);
+      console.log(response)
+      if(response.data){
+        setData(response.data);
       }
       else{
         setData(response.data)
       }
       setLoading(false);
+      setError(true);
     } catch (error) {
       setError(error);
     }

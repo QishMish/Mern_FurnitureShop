@@ -1,0 +1,125 @@
+.dashboard {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+.sidebar {
+  min-height: calc(100vh - 130px);
+  min-width: 200px;
+  width: 15%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px 0;
+  position: relative;
+  position: fixed;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  transition: 0.4s ease-in-out;
+  z-index: 1;
+  opacity: 1;
+  background-color: #ffff;
+}
+.sidebar-icon {
+  position: absolute;
+  top: 20px;
+  right: -50px;
+  font-size: 30px;
+  cursor: pointer;
+}
+.close {
+  color: rgba(245, 30, 30, 0.856);
+}
+.show {
+  color: rgb(10, 152, 120);
+}
+.close-sidebar {
+  transform: translateX(-100%);
+}
+
+.admin-nav {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+}
+.admin-item {
+  list-style: none;
+  margin: 30px auto;
+  padding: 10px 15px;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: bold;
+  color: rgb(56, 56, 56);
+}
+.dash-body {
+  /* min-height: calc(100vh - 130px); */
+  min-height: calc(100vh - 130px);
+  width: 100%;
+  padding: 90px;
+  background-color: rgb(250, 250, 250);
+}
+.dash-container {
+  background-color: #ffff;
+  width: 100%;
+  min-height: 100%;
+  padding: 50px 20px;
+  box-shadow: rgba(227, 233, 238, 0.2) 0px 10px 15px;
+}
+.admin-modal {
+  max-width: 500px;
+  /* max-height: 600px; */
+  width: 90%;
+  background-color: rgb(250, 250, 250);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  padding: 60px;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px,
+    rgb(209, 213, 219) 0px 0px 0px 1px inset;
+}
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 30px;
+  color: rgba(245, 30, 30, 0.856);
+  cursor: pointer;
+}
+.product-form-wrapper {
+  width: 100%;
+  /* height: 100%; */
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+.product-form input,
+.product-form textarea {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: auto;
+  width: 100%;
+  height: 40px;
+  padding: 2px 6px;
+  outline: none;
+  border: none;
+  color: rgb(56, 56, 56);
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px,
+    rgb(209, 213, 219) 0px 0px 0px 1px inset;
+}
+.product-form textarea {
+  resize: none;
+  height: 100px;
+}
+.product-label{
+   padding: 5px;
+   display: block;
+}
+.add{
+    background-color: rgb(10, 152, 120);;
+    cursor: pointer;
+    margin: 20px;
+}
