@@ -25,19 +25,24 @@ function Products() {
 
   useEffect(() => {}, [data, currentCategory]);
 
-  const renderProducts = filteringData[pageIndex]?.map((product, index) => {
+  // const renderProducts = filteringData[pageIndex]?.map((product, index) => {
+  //   return <ProductItem key={index} product={product} />;
+  // });
+  const renderProducts = data?.map((product, index) => {
     return <ProductItem key={index} product={product} />;
   });
+  console.log("render2")
+  
   if (loading) {
     return <Loading />;
   }
   return (
     <div className="products">
-      <FilterPanel
+      {/* <FilterPanel
         categories={categories}
         setCategories={setCategories}
         setCurrentCategory={setCurrentCategory}
-      />
+      /> */}
       <div className="products-info">
         Showing {pageIndex + 1} – {paginationData[pageIndex]?.length} of
         {data.length} results
@@ -50,11 +55,11 @@ function Products() {
       >
         {renderProducts}
       </motion.div>
-      <ProductPagination
+      {/* <ProductPagination
         paginationDataProp={paginationData}
         pageIndexProp={pageIndex}
         setPaginationIndex={setPageIndex}
-      />
+      /> */}
     </div>
   );
 }

@@ -1,5 +1,6 @@
 export const paginateHandler = (data, category) => {
-  const itemsPerPage = 14;
+  // const itemsPerPage = 14;
+  const itemsPerPage = 12;
   if (category.toLowerCase() === "all") {
     const pageQuantity = Math.ceil(data.length / itemsPerPage);
     const productsArr = Array.from({ length: pageQuantity }, (_, index) => {

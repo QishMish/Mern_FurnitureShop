@@ -1,33 +1,36 @@
 /** @format */
-import { Link, useParams } from "react-router-dom";
-import React from "react";
-import SingleProductCatalog from "../components/SingleProductCatalog";
-import "../styles/Single-product-page.css";
-import { FaFacebookSquare, FaTwitter, FaWhatsapp } from "react-icons/fa";
-import CustumHttpGet from "../hooks/CustumHttp";
-import Loading from "../components/Loading";
-import { useGlobalContext } from "../context/AppContext";
-import { addItem } from "../context/actions/cartActions";
-import { useState } from "react";
+import { Link, useParams } from 'react-router-dom';
+import React,{useEffect} from 'react';
+import SingleProductCatalog from '../components/SingleProductCatalog';
+import '../styles/Single-product-page.css';
+import { FaFacebookSquare, FaTwitter, FaWhatsapp } from 'react-icons/fa';
+import CustumHttpGet from '../hooks/CustumHttp';
+import Loading from '../components/Loading';
+import { useGlobalContext } from '../context/AppContext';
+import { addItem } from '../context/actions/cartActions';
+import { useState } from 'react';
 
 export default function ProductPage() {
   const { productId } = useParams();
   const { dispatch } = useGlobalContext();
   const [amount, setAmount] = useState(1);
 
-  console.log(`http://localhost:8080/api/v1/product/` + productId);
+  // console.log(`http://localhost:8080/api/v1/product/` + productId);
 
   const { loading, data, error } = CustumHttpGet(
     `http://localhost:8080/api/v1/product/` + productId
   );
   // const [product] = data;
-  console.log(data);
+  // console.log(data);
 
   const {
     loading: relatedLoading,
     data: relatedProducts,
     error: relatedError,
-  } = CustumHttpGet(`http://localhost:8080/related_products/` + productId);
+  } = CustumHttpGet(
+    `http://localhost:8080/api/v1/product/related_products/` + productId
+  );
+
 
   const addItemHandler = () => {
     if (parseInt(amount) < 1) {
@@ -36,7 +39,7 @@ export default function ProductPage() {
     const { _id, title, price, images, subtotal } = data;
     let image = images[0];
     const cartItem = {
-      id:_id,
+      id: _id,
       title,
       price,
       image,
@@ -46,80 +49,80 @@ export default function ProductPage() {
     dispatch(addItem(cartItem));
   };
 
+  console.log(relatedProducts)
+
   if (loading) {
     return <Loading />;
   }
 
   return (
-    <div className="bg-gray">
-      <div className="single-product-page container">
-        <div className="single-product-info">
-          <div className="product-left">
+    <div className='bg-gray'>
+      <div className='container single-product-page'>
+        <div className='single-product-info'>
+          <div className='product-left'>
             <SingleProductCatalog images={data.images} />
           </div>
-          <div className="product-right">
-            <p className="header">Home / Furniture / Aform Barstool</p>
-            <div className="info">
+          <div className='product-right'>
+            <p className='header'>Home / Furniture / Aform Barstool</p>
+            <div className='info'>
               <p>{data.title}</p>
               <span>{data.price}</span>
             </div>
-            <div className="product-info-footer">
-              <div className="add-to-cart">
+            <div className='product-info-footer'>
+              <div className='add-to-cart'>
                 <input
-                  type="number"
+                  type='number'
                   value={amount}
-                  onChange={(e) => setAmount(e.target.value)}
+                  onChange={e => setAmount(e.target.value)}
                   min={1}
                 />
                 <button onClick={addItemHandler}>Add to cart</button>
               </div>
-              <div className="social-icons">
-                <div className="icons-bg blue">
-                  <FaFacebookSquare className="social-icon" />
+              <div className='social-icons'>
+                <div className='icons-bg blue'>
+                  <FaFacebookSquare className='social-icon' />
                 </div>
-                <div className="icons-bg light-blue">
-                  <FaTwitter className="social-icon" />
+                <div className='icons-bg light-blue'>
+                  <FaTwitter className='social-icon' />
                 </div>
-                <div className="icons-bg green">
-                  <FaWhatsapp className="social-icon" />
+                <div className='icons-bg green'>
+                  <FaWhatsapp className='social-icon' />
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="single-product-description">
-          <div className="desc-title">Description </div>
+        <div className='single-product-description'>
+          <div className='desc-title'>Description </div>
           <h2>Description </h2>
           <p>{data.description}</p>
         </div>
         <h2>Related Products</h2>
-        <div className="single-product-realated">
-          <div className="related-products-container">
-            {relatedLoading ? (
-              <Loading />
-            ) : (
-              relatedProducts.map((item, index) => {
+        <div className='single-product-realated'>
+          {relatedLoading && <Loading />}
+          <div className='related-products-container'>
+            {!relatedLoading &&
+              relatedProducts?.map((item, index) => {
+                console.log(item)
                 return (
                   <Link
                     key={index}
-                    to={`/shop/${item.id}`}
-                    className="product-item"
-                  >
-                    <div className="image-container related-item">
+                    to={`/shop/${item._id}`}
+                    className='product-item'>
+                    <div className='image-container related-item'>
                       <img
                         src={item.images[0]}
-                        alt="image"
-                        className="related-image"
+                        alt='image'
+                        className='related-image'
                       />
                     </div>
-                    <div className="product-buttom-bar">
+                    <div className='product-buttom-bar'>
                       <p>{item.title}</p>
                       <span>{item.price}</span>
                     </div>
                   </Link>
                 );
-              })
-            )}
+              })}
           </div>
         </div>
       </div>

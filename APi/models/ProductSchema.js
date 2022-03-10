@@ -7,7 +7,7 @@ const ProductSchema = new mongoose.Schema({
         trim:true
     },
     price:{
-        type:String,
+        type:Number,
         require:[true, 'you must provide product price'],
         trim:true
     },
@@ -25,10 +25,14 @@ const ProductSchema = new mongoose.Schema({
         require:[true, 'you must provide product description'],
         trim:true
     },
-    related_products:{
-        type:Array,
-        require:false
+    keywords :{
+        type: Array,
     }
+    
+    // related_products:{
+    //     type:Array,
+    //     require:false
+    // }
 }, { timestamps: true });
 
 

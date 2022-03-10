@@ -5,7 +5,8 @@ const ProductService = require("../services/productService");
 const ProductServiceInstance = new ProductService();
 
 exports.getAllProduct = asyncHandler(async (req, res) => {
-  const products = await ProductServiceInstance.getAll();
+  let query = req.query;
+  const products = await ProductServiceInstance.getAll(query);
   res.status(200).json(products);
 });
 exports.getCertanProduct = asyncHandler(async (req, res) => {
