@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-const AuthService = require("../services/authService");
+const AuthService = require("../services/auth.service");
 
 const AuthServiceInstance = new AuthService();
 

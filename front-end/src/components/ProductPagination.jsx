@@ -1,41 +1,41 @@
-import React, { useState } from "react";
+import React from "react";
+import { useGlobalContext } from "../context/AppContext";
 import "../styles/Pagination.css";
 
-function ProductPagination({
-  paginationDataProp,
-  pageIndexProp,
-  setPaginationIndex,
-}) {
+function ProductPagination({ productLength }) {
+  const {
+    productConfig,
+    products,
+    nextPageHandler,
+    prevPageHandler,
+    navigateHandler,
+  } = useGlobalContext();
+  const { page, limit } = productConfig;
+  const { length,productsByCategory } = products;
   return (
     <div className="product-pagination">
-      {pageIndexProp >= 1 && (
-        <div
-          className="page-index"
-          onClick={() => setPaginationIndex((prev) => prev - 1)}
-        >
+      {page > 1 && (
+        <div className="page-index" onClick={() => prevPageHandler()}>
           ←
         </div>
       )}
-      {paginationDataProp?.map((pageIndex, index) => {
-        return (
-          <div
-            className={
-              pageIndexProp + 1 == index + 1
-                ? "page-index page-active"
-                : "page-index"
-            }
-            key={index}
-            onClick={() => setPaginationIndex(index)}
-          >
-            {index + 1}
-          </div>
-        );
-      })}
-      {pageIndexProp == paginationDataProp.length - 1 ? null : (
-        <div
-          className="page-index"
-          onClick={() => setPaginationIndex((prev) => prev + 1)}
-        >
+      {Array.apply(null, { length: Math.ceil(productLength / limit) }).map(
+        (pageIndex, index) => {
+          return (
+            <div
+              className={
+                page == index + 1 ? "page-index page-active" : "page-index"
+              }
+              key={index}
+              onClick={(e) => navigateHandler(index + 1)}
+            >
+              {index + 1}
+            </div>
+          );
+        }
+      )}
+      {page < Math.ceil(length / limit) && (
+        <div className="page-index" onClick={() => nextPageHandler()}>
           →
         </div>
       )}

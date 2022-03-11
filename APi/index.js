@@ -1,3 +1,67 @@
+const express = require("express");
+const app = express();
+const cors = require("cors");
+const dateJson = require("./Data.json");
+const routes = require("./routes");
+const { globalErrorHandler } = require("./middlewares/globalExceptionHandler");
+const { upload } = require("./middlewares/UploadImage");
+require("dotenv").config();
+
+
+
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use("/api/v1/", routes);
+app.use(globalErrorHandler);
+
+
+module.exports = app;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // const express = require("express");
 // const app = express();
 // const cors = require("cors");

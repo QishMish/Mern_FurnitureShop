@@ -11,7 +11,7 @@ function HeaderCart() {
           <div className="header-cart-price">
             $
             {cartState.total > 100
-              ? cartState.total.toFixed(2)
+              ? cartState.total
               : cartState.total}
             <span> {cartState.amount}</span>
           </div>

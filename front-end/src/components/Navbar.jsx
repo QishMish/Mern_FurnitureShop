@@ -16,11 +16,6 @@ function Navbar() {
       id: "#shop",
     },
     {
-      heading: "blog",
-      url: "/blog",
-      id: "#blog",
-    },
-    {
       heading: "login",
       url: "/login",
       id: "#login",
@@ -50,9 +45,6 @@ function Navbar() {
           <NavLink to="/shop" className="nav-item" id="shop">
             shop
           </NavLink>
-          <NavLink to="/blog" className="nav-item" id="blog">
-            blog
-          </NavLink>
           {!userState.user && (
             <NavLink to="/login" className="nav-item" id="login">
               login
@@ -60,7 +52,7 @@ function Navbar() {
           )}
           {userState.user && (
             <>
-              <NavLink to='/dashboard' className="nav-item" id="dashboard">
+              <NavLink to="/dashboard" className="nav-item" id="dashboard">
                 Dashboard
               </NavLink>
               <div className="nav-item" id="logout" onClick={logOutHandler}>

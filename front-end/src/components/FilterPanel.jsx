@@ -1,24 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "../styles/Filter-menu.css";
 import { useGlobalContext } from "../context/AppContext";
 
-function FilterPanel({ categories, setCategories, setCurrentCategory }) {
-  const { products } = useGlobalContext();
-  const { data } = products;
-
-  useEffect(() => {
-    setCategories(
-      data.reduce(
-        function (values, item) {
-          if (!values.includes(item.category)) {
-            values.push(item.category);
-          }
-          return values;
-        },
-        ["All"]
-      )
-    );
-  }, []);
+function FilterPanel({ categories }) {
+  const { setCategoryHandler } = useGlobalContext();
   return (
     <div className="menu-panel">
       <div className="menu-items">
@@ -27,7 +12,7 @@ function FilterPanel({ categories, setCategories, setCurrentCategory }) {
             <li
               key={index}
               className="menu-item"
-              onClick={(e) => setCurrentCategory(e.target.innerText)}
+              onClick={(e) => setCategoryHandler(item.toLowerCase())}
             >
               {item}
             </li>

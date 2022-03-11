@@ -1,33 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "../styles/Products.css";
 import FilterPanel from "./FilterPanel";
 import ProductItem from "./ProductItem";
 import { useGlobalContext } from "../context/AppContext";
 import ProductPagination from "./ProductPagination";
-import { paginateHandler } from "../utils/Pagination";
 import Loading from "./Loading";
 import { motion } from "framer-motion";
 
 function Products() {
-  const { products } = useGlobalContext();
-  const { loading, data, error } = products;
-  const [pageIndex, setPageIndex] = useState(0);
-  const [categories, setCategories] = useState([]);
-  const [currentCategory, setCurrentCategory] = useState("all");
-  const [paginationData, setPaginationData] = useState([]);
-  const [filteringData, setFilteringData] = useState([]);
+  const {
+    products: productsObject,
+    loading,
+    setCategoryHandler,
+    productConfig,
+  } = useGlobalContext();
+  const { products, productsByCategory, length, categories } = productsObject;
+  const { page, limit, category } = productConfig;
 
-  useEffect(() => {
-    const pagDate = paginateHandler(data, currentCategory);
-    setPaginationData(pagDate);
-    setFilteringData(pagDate);
-  }, [data, currentCategory]);
-
-  useEffect(() => {}, [data, currentCategory]);
-
-  const renderProducts = filteringData[pageIndex]?.map((product, index) => {
+  const renderProducts = productsByCategory?.map((product, index) => {
     return <ProductItem key={index} product={product} />;
   });
+
   if (loading) {
     return <Loading />;
   }
@@ -35,12 +28,11 @@ function Products() {
     <div className="products">
       <FilterPanel
         categories={categories}
-        setCategories={setCategories}
-        setCurrentCategory={setCurrentCategory}
+        setCurrentCategory={setCategoryHandler}
       />
       <div className="products-info">
-        Showing {pageIndex + 1} – {paginationData[pageIndex]?.length} of
-        {data.length} results
+        Showing {(page - 1) * limit + 1} – {limit * page} of {products.length}{" "}
+        results
       </div>
       <motion.div
         layout
@@ -51,12 +43,14 @@ function Products() {
         {renderProducts}
       </motion.div>
       <ProductPagination
-        paginationDataProp={paginationData}
-        pageIndexProp={pageIndex}
-        setPaginationIndex={setPageIndex}
+        productLength={
+          category === "all"
+            ? length
+            : products.filter((item) => item.category == category).length
+        }
       />
     </div>
   );
 }
-
+// productsByCategory.length
 export default Products;

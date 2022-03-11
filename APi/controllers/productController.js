@@ -1,11 +1,15 @@
 const asyncHandler = require("express-async-handler");
-const ProductService = require("../services/productService");
+const ProductService = require("../services/product.service");
 
 //service instance
 const ProductServiceInstance = new ProductService();
 
 exports.getAllProduct = asyncHandler(async (req, res) => {
-  const products = await ProductServiceInstance.getAll();
+  let queryObject;
+  if (req.query) {
+    queryObject = req.query;
+  }
+  const products = await ProductServiceInstance.getAll(queryObject);
   res.status(200).json(products);
 });
 exports.getCertanProduct = asyncHandler(async (req, res) => {
@@ -30,8 +34,13 @@ exports.deleteProduct = asyncHandler(async (req, res) => {
   const deletedProduct = await ProductServiceInstance.deleteProduct(id);
   res.status(202).json(deletedProduct);
 });
-exports.getRelatedProducts = asyncHandler(async (req,res)=>{
+exports.getRelatedProducts = asyncHandler(async (req, res) => {
   const id = req.params.id;
   const relatedProducts = await ProductServiceInstance.getRelatedProducts(id);
   res.status(200).json(relatedProducts);
-})
+});
+exports.getAllcategories = asyncHandler(async (req, res) => {
+  const categories = await ProductServiceInstance.getAllCategories();
+  res.status(200).json(categories);
+});
+

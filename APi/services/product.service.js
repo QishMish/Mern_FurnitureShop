@@ -1,19 +1,38 @@
 const Product = require("../models/ProductSchema");
 const mongoose = require("mongoose");
 const { throwCustumError } = require("../errors/CustumError");
+const { json } = require("express");
 
 class ProductService {
-  static ProductServiceInstance;
-  getInstance = () => {
-    if (this.ProductServiceInstance) {
-      return ProductServiceInstance;
+  getAll = async (queryObject) => {
+    let queryObj = { ...queryObject };
+    const productsQuery = Product.find();
+    console.log(queryObj);
+
+    if (queryObj.sort) {
+      productsQuery.sort(queryObj.sort);
     }
-    this.ProductServiceInstance = new ProductService();
-    return this.ProductServiceInstance;
-  };
-  getAll = async () => {
-    const products = await Product.find({});
-    return products;
+    if (queryObj.fields) {
+      let selectFields = queryObj.fields.split(",").join(" ");
+      productsQuery.select(selectFields);
+    }
+    if (queryObj.category) {
+      if (queryObj.category === "all") {
+        productsQuery.find({});
+      } else {
+        // let excludeProps = ["page", "sort", "limit", "fields"];
+        // excludeProps.forEach((element) => delete queryObj[element]);
+        productsQuery.find({ category: queryObj.category });
+      }
+    }
+    console.log(queryObj);
+    if (queryObj.page) {
+      let page = parseInt(queryObj.page) || 1;
+      let limit = parseInt(queryObj.limit) || 14;
+      let skip = (page - 1) * limit;
+      productsQuery.skip(skip).limit(limit);
+    }
+    return await productsQuery;
   };
   getCertain = async (id) => {
     const isValid = validateMongoId(id);
@@ -64,15 +83,21 @@ class ProductService {
     return deletedProduct;
   };
   getRelatedProducts = async (id) => {
-    const product = dateJson.products.find((item) => item.id == req.params.id);
-    let relatedProducts = product.related_products.map((relatedItem) => {
-      return dateJson.products.find((item) => item.id == relatedItem.id);
+    const product = await this.getCertain(id);
+    const keywords = [...product.keywords];
+    const query = Product.find({
+      keywords: { $in: keywords },
+      _id: { $nin: id },
     });
-    return relatedProducts;
+    return await query;
+  };
+  getAllCategories = async () => {
+    const data = await Product.find().distinct("category");
+    return ["all", ...data];
   };
 }
 
-const validateMongoId = (id) => {
+const validateMongoId = async (id) => {
   return mongoose.Types.ObjectId.isValid(id);
 };
 
