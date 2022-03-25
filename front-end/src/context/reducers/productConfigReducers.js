@@ -31,6 +31,7 @@ export const productConfigReducer = (state, action) => {
         total: action.payload,
       };
     case SET_CATEGORY:
+      console.log("calculation")
       return {
         ...state,
         category: action.payload,

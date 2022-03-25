@@ -60,7 +60,13 @@ export default function ProductPage() {
       <div className="single-product-page container">
         <div className="single-product-info">
           <div className="product-left">
-            <SingleProductCatalog images={data.images} />
+            <SingleProductCatalog
+              images={
+                data.images
+                  ? data.images
+                  : ["https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png"]
+              }
+            />
           </div>
           <div className="product-right">
             <p className="header">

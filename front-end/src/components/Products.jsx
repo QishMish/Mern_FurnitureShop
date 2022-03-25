@@ -21,6 +21,8 @@ function Products() {
     return <ProductItem key={index} product={product} />;
   });
 
+  console.log(length);
+
   if (loading) {
     return <Loading />;
   }

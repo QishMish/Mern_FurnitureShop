@@ -79,7 +79,8 @@ class ProductService {
     if (!isValid) {
       throwCustumError("You Must Provide Valid Product Id", 400);
     }
-    const deletedProduct = await Product.deleteOne({ id });
+    console.log(id);
+    const deletedProduct = await Product.deleteOne({ _id: id });
     return deletedProduct;
   };
   getRelatedProducts = async (id) => {

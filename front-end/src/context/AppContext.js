@@ -12,6 +12,9 @@ import {
   fetchProducts,
   calculateProductCount,
   setProductCategories,
+  addProduct,
+  updateProduct,
+  deleteProduct,
 } from "./actions/productActions";
 import {
   nextPage,
@@ -91,10 +94,12 @@ export default function AppProvider(props) {
     loading: categoriesLoading,
     error: categoreisErr,
     data: categories = [],
-  } = useFetch(PRODUCT_URL + "categories", []);
+  } = useFetch(PRODUCT_URL + "categories", [products.products.length]);
 
   useEffect(() => {
     loadProducts();
+    console.log(products.products.length);
+    console.log("render");
   }, [productConfig.category, productConfig.page]);
 
   // useEffect(() => {
@@ -130,13 +135,18 @@ export default function AppProvider(props) {
   //product GET function end
 
   //admin panel functions start
-  const addProduct = (product) => {
-    axiosInstance.post("/product/",product);
+  const addProductHandler = (product) => {
+    console.log(product);
+    dispatchProducts(addProduct(product));
+    axiosInstance.post("/product/", product);
   };
-  const updateProduct = (id, product) => {
+  const updateProductHandler = (id, product) => {
+    dispatchProducts(updateProduct(id, product));
     axiosInstance.put(`/product/${id}`, product);
   };
-  const deleteProduct = (id) => {
+  const deleteProductHandler = (id) => {
+    console.log(id);
+    dispatchProducts(deleteProduct(id));
     axiosInstance.delete(`/product/${id}`);
   };
   //admin panel functions end
@@ -167,7 +177,14 @@ export default function AppProvider(props) {
   }, [cartState.cartItems]);
 
   useEffect(() => {
-    localStorage.setItem("user", JSON.stringify({token: userState.user.token, user: userState.user.email }));
+    userState.user &&
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          token: userState.user.token,
+          user: userState.user.email,
+        })
+      );
   }, [userState]);
   //useeffects end
   return (
@@ -182,9 +199,9 @@ export default function AppProvider(props) {
         dispatch: dispatch,
         userState: userState,
         dispatchUser: dispatchUser,
-        addProduct,
-        updateProduct,
-        deleteProduct,
+        addProductHandler,
+        updateProductHandler,
+        deleteProductHandler,
         nextPageHandler,
         prevPageHandler,
         navigateHandler,

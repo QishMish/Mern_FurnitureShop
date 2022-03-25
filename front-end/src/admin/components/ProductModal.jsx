@@ -10,9 +10,13 @@ function ProductModal({
   modalOpen,
   setEditProductData,
   editProductData,
+  editMode,
+  setEditMode
 }) {
-  const { products, addProduct } = useGlobalContext();
+  const { products, addProductHandler, updateProductHandler } =
+    useGlobalContext();
   const { products: productsList } = products;
+  const [id, setId] = useState("");
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
@@ -22,16 +26,32 @@ function ProductModal({
   const [keywords, setKeywords] = useState([]);
 
   useEffect(() => {
-    setTitle(editProductData.title);
-    setPrice(editProductData.price);
-    setDescription(editProductData.description);
-    setDescription(editProductData.images[0]);
-    setCategory(editProductData.category);
-    setKeywords(editProductData.keywords);
+    setId(editMode ? editProductData._id : "");
+    setTitle(editMode ? editProductData.title : "");
+    setPrice(editMode ? editProductData.price : "");
+    setDescription(editMode ? editProductData.description : "");
+    setCategory(editMode ? editProductData.category : "");
+    setKeywords(editMode ? editProductData.keywords : []);
   }, []);
 
+  function ObjectId() {
+    const timestamp = ((new Date().getTime() / 1000) | 0).toString(16);
+    const suffix = "xxxxxxxxxxxxxxxx"
+      .replace(/[x]/g, () => ((Math.random() * 16) | 0).toString(16))
+      .toLowerCase();
+    return `${timestamp}${suffix}`;
+  }
   const addNewProductHandler = () => {
-    addProduct({
+    // setId("");
+    // setTitle("");
+    // setPrice("");
+    // setDescription("");
+    // setDescription("");
+    // setCategory("");
+    // setKeywords([]);
+    let id = ObjectId();
+    addProductHandler({
+      _id: id,
       title,
       price,
       description,
@@ -39,7 +59,20 @@ function ProductModal({
       image,
       keywords,
     });
-    setModalOpel((prevState => !prevState))
+    setModalOpel((prevState) => !prevState);
+  };
+
+  const editProductHandler = () => {
+    updateProductHandler(editProductData._id, {
+      _id: id,
+      title,
+      price,
+      description,
+      category,
+      image,
+      keywords,
+    });
+    setModalOpel((prevState) => !prevState);
   };
 
   const addKeyword = (e) => {
@@ -62,7 +95,10 @@ function ProductModal({
     <div className="admin-modal">
       <AiOutlineCloseCircle
         className="modal-close"
-        onClick={() => setModalOpel(!modalOpen)}
+        onClick={() => {
+          setModalOpel(false)
+          setEditMode(false)
+        }}
       />
       <div className="product-form-wrapper">
         <form className="product-form">
@@ -147,10 +183,10 @@ function ProductModal({
           <Button
             variant="contained"
             disableElevation
-            onClick={addNewProductHandler}
+            onClick={editMode ? editProductHandler : addNewProductHandler}
             style={{ margin: "30px 0", backgroundColor: "rgb(10, 152, 120)" }}
           >
-            Add Product
+            {editMode ? "Update" : "Add Product"}
           </Button>
         </form>
       </div>

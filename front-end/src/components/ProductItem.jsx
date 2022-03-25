@@ -46,14 +46,22 @@ function ProductItem({ product }) {
           <img
             className="main-image"
             ref={imageRef}
-            src={images[0]}
+            src={
+              images[0]
+                ? images[0]
+                : "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png"
+            }
             alt="image"
             width="100%"
           />
           <img
             className="hover-img"
             ref={imageRef}
-            src={images[1]}
+            src={
+              images[1]
+                ? images[1]
+                : "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png"
+            }
             alt="image"
             width="100%"
           />

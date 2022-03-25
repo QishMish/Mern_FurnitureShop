@@ -7,6 +7,7 @@ import SearchBar from "material-ui-search-bar";
 function Products() {
   const [modalOpen, setModalOpel] = useState(false);
   const [editProductData, setEditProductData] = useState({
+    _id: "",
     title: "",
     price: "",
     description: "",
@@ -14,6 +15,7 @@ function Products() {
     images: "",
     keywords: [],
   });
+  const [editMode, setEditMode] = useState(false);
   const [searchInput, setSearchInput] = useState("");
 
   return (
@@ -24,7 +26,9 @@ function Products() {
       />
       <div style={{ margin: "50px auto 20px auto", textAlign: "center" }}>
         <Button
-          onClick={() => setModalOpel(!modalOpen)}
+          onClick={() => {
+            setModalOpel(true);
+          }}
           variant="contained"
           disableElevation
         >
@@ -35,6 +39,8 @@ function Products() {
         setModalOpel={setModalOpel}
         setEditProductData={setEditProductData}
         searchInput={searchInput}
+        editMode={editMode}
+        setEditMode={setEditMode}
       />
       {modalOpen && (
         <ProductModal
@@ -42,6 +48,8 @@ function Products() {
           setModalOpel={setModalOpel}
           editProductData={editProductData}
           setEditProductData={setEditProductData}
+          editMode={editMode}
+          setEditMode={setEditMode}
         />
       )}
     </>

@@ -36,14 +36,17 @@ export default function ProductsList({
   setModalOpel,
   setEditProductData,
   searchInput,
+  setEditMode,
+  editMode,
 }) {
-  const { products, loading,deleteProduct } = useGlobalContext();
+  const { products, loading, deleteProductHandler } = useGlobalContext();
   const { products: productsList, length, productsByCategory } = products;
 
-  const productsListFiltered = productsList.filter((product) =>
+  const productsListFiltered = productsList?.filter((product) =>
     product.title.toLowerCase().includes(searchInput.toLowerCase())
   );
   const editHandler = (e) => {
+    setEditMode(true);
     let id = e.target.id;
     const product = productsList.find((item) => item._id === id);
     setModalOpel((prevstate) => {
@@ -55,13 +58,12 @@ export default function ProductsList({
   const deleteHandler = async (e) => {
     let id = e.target.id;
     try {
-      deleteProduct(id);
-      console.log(id)
+      deleteProductHandler(id);
+      console.log(id);
     } catch (error) {
       console.log(error);
     }
   };
-  useEffect(() => {}, [productsList.length]);
 
   if (loading) {
     return <Loading />;
@@ -72,8 +74,8 @@ export default function ProductsList({
         <h1 className="product-not-found">Product Not Found</h1>
       )}
       {productsListFiltered.length > 0 && (
-        <TableContainer component={Paper} >
-          <Table sx={{ minWidth: 500 }} aria-label="customized table" >
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 500 }} aria-label="customized table">
             <TableHead>
               <TableRow>
                 <StyledTableCell align="left">Title</StyledTableCell>
@@ -104,7 +106,11 @@ export default function ProductsList({
                     </StyledTableCell>
                     <StyledTableCell align="left">
                       <img
-                        src={row.images[0]}
+                        src={
+                          row.images
+                            ? row?.images[0]
+                            : "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png"
+                        }
                         width="40px"
                         height="40px"
                         style={{ objectFit: "cover" }}
